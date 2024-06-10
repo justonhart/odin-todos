@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Odin Todos!</title>
+</head>
+<body>
+	<div id="header">
+		<h1>Odin Todos</h1>
+		<p>Use the form below to manage your tasks!</p>
+	</div>
+	<form id="entryForm">
+		<h2>Add new task</h2>
+		<label for="title">Task title:</label>
+		<input type="text" name="title" id="title" required tabindex="1">
+		<label for="description">Description:</label>
+		<input type="text" name="description" id="description" required tabindex="2">
+		<label for="dueDate">Due date:</label>
+		<input type="date" name="dueDate" id="dueDate" required tabindex="3">
+		<label for="priority">Priority:</label>
+		<select name="priority" id="priority">
+		</select>
+		<input type="submit" value="Add task">
+	</form>
+	<ul id="taskList">
+		<li class="demo">
+			<span class="title">Title</span>
+			<span class="description">Description</span>
+			<span>Due date</span>
+			<span>Priority</span>
+			<div class="buttonPanel">
+				<button disabled>✔</button><button disabled>✖</button>
+			</div>
+		</li>
+	</ul>
+</body>
+</html>

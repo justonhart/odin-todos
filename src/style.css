@@ -1,0 +1,101 @@
+html, body{
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+h1, h2, h3{
+	margin: 0;
+}
+
+body{
+	display: grid;
+	grid-template: min-content auto / max-content auto;
+}
+
+body > *{
+	padding:8px;
+}
+
+#header{
+	grid-column: 1 / -1;
+	border-bottom:1px solid black;
+}
+
+#entryForm {
+	display: grid;
+	grid-template-columns: auto auto;
+	justify-items: left;
+	height: min-content;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+#entryForm h2{
+	grid-column: 1 / -1;
+}
+
+#entryForm input{
+	height: min-content;
+}
+
+#entryForm input[type="submit"]{
+	grid-column: 2;
+	justify-self: end;
+}
+
+#taskList{
+	border-left: 1px solid black;
+	flex: 1;
+	margin: 0;
+	list-style-type: none;
+	background-color: #e6e6e6;
+	overflow: auto;
+	padding-right: 16px;
+	scrollbar-width: thin;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: baseline;
+	gap: 1rem;
+}
+
+
+#taskList li{
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	padding: 8px;
+	border-radius: 8px;
+	box-shadow: 0 2px 5px gray;
+	width: 200px;
+	height: min-content;
+}
+
+.demo{
+	color: gray;
+}
+
+.title{
+	font-weight: bold;
+}
+
+.description{
+	font-style: italic;
+}
+
+.buttonPanel{
+	width: 100%;
+	text-align: right;
+}
+
+.buttonPanel button{
+	padding: 2px 8px;
+}
+
+.buttonPanel button + button{
+	margin-left: 3px;
+}
+
+#taskList .read{
+	background-color:#e6ffe6;
+}

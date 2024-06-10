@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 	entry: {
-		index: './src/index.js',
+		index: './src/script.ts',
 	},
 	output: {
 		filename: 'bundle.js',
@@ -19,7 +19,19 @@ module.exports = {
 			{
 				test: /\.(png|jpg|svg)$/i,
 				type: 'asset/resource'
-			}
+			},
+			{
+				test: /\.ts?$/,
+				use: 'ts-loader',
+				exclude: /node_modules/,
+			},
+		]
+	},
+	resolve: {
+		extensions: [
+			'.tsx',
+			'.ts',
+			'.js'
 		]
 	},
 	plugins: [

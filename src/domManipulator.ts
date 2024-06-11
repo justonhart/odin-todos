@@ -37,4 +37,43 @@ export default class DomManipulator {
 			this.prioritySelect.appendChild(option);	
 		});
 	}
+
+	/**
+	 * Render a provided list of tasks to the taskList element
+	 * @param tasks - List of tasks to be rendered in the DOM
+	 */
+	renderList(tasks: Task[]): void {
+		this.taskList.innerHTML = '';
+		tasks.forEach(task => {
+			this.taskList.appendChild(DomManipulator.createTaskElement(task));
+		});
+	}
+
+	/**
+	 * Generate a DOM element for one task
+	 * @param task - The target task
+	 */
+	private static createTaskElement(task: Task): HTMLElement {
+		const taskRoot = document.createElement('li');
+
+		const title = document.createElement('span');
+		title.textContent = task.title;
+		title.classList.add('title');
+		taskRoot.appendChild(title);
+
+		const description = document.createElement('span');
+		description.textContent = task.description;
+		description.classList.add('description');
+		taskRoot.appendChild(description);
+
+		const dueDate = document.createElement('span');
+		dueDate.textContent = 'Due date: ' + task.dueDate.toLocaleDateString();
+		taskRoot.appendChild(dueDate);
+
+		const priority = document.createElement('span');
+		priority.textContent = 'Priority: ' + Priority[task.priority]; 
+		taskRoot.appendChild(priority);
+
+		return taskRoot;
+	}
 }

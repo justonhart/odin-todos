@@ -99,3 +99,7 @@ form input[type="submit"]{
 #taskList .read{
 	background-color:#e6ffe6;
 }
+
+dialog{
+	padding: revert;
+}

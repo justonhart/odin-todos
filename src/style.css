@@ -103,3 +103,7 @@ form input[type="submit"]{
 dialog{
 	padding: revert;
 }
+
+#projectMenu select{
+	width: 100%;
+}

@@ -6,11 +6,13 @@ export class Task{
 	public description: string;
 	public dueDate: Date;
 	public priority: Priority;
-	constructor(title: string, desc: string, dueDate: Date, priority: Priority) {
+	public project: string;
+	constructor(title: string, desc: string, dueDate: Date, priority: Priority, project: string) {
 		this.title = title;
 		this.description = desc;
 		this.dueDate = dueDate;
 		this.priority = priority;
+		this.project = project;
 	}
 }
 

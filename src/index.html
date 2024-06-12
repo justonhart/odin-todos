@@ -26,18 +26,13 @@
 		<hr>
 		<div id="projectMenu">
 			<h2>Projects</h2>
+			<select id="projectSelect" name="projectSelect" size=10>
+				<option value="">Default</option>
+			</select>
+			<button id="openAddProject">Add new project</button>
 		</div>
 	</div>
 	<ul id="taskList">
-		<li class="demo">
-			<span class="title">Title</span>
-			<span class="description">Description</span>
-			<span>Due date</span>
-			<span>Priority</span>
-			<div class="buttonPanel">
-				<button disabled>✔</button><button disabled>✖</button>
-			</div>
-		</li>
 	</ul>
 	<dialog id='taskEditDialog'>
 		<form id="editForm" method="dialog">
@@ -51,7 +46,14 @@
 			<label for="editPriority">Priority:</label>
 			<select name="editPriority" id="editPrioritySelect">
 			</select>
-			<input type="submit" value="update task" required>
+			<input type="submit" value="update task">
+		</form>
+	</dialog>
+	<dialog id="addProjectDialog">
+		<form id="addProjectForm" method="dialog">
+			<label for="addProjectName">New project name:</label>
+			<input type="text" name="addProjectName" id="addProjectName">
+			<input type="submit" value="Create project">
 		</form>
 	</dialog>
 </body>

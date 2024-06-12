@@ -22,7 +22,7 @@ body > *{
 	border-bottom:1px solid black;
 }
 
-#entryForm {
+form {
 	display: grid;
 	grid-template-columns: auto auto;
 	justify-items: left;
@@ -31,15 +31,15 @@ body > *{
 	align-items: center;
 }
 
-#entryForm h2{
+form h2{
 	grid-column: 1 / -1;
 }
 
-#entryForm input{
+form input{
 	height: min-content;
 }
 
-#entryForm input[type="submit"]{
+form input[type="submit"]{
 	grid-column: 2;
 	justify-self: end;
 }

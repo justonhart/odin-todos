@@ -9,19 +9,25 @@
 		<h1>Odin Todos</h1>
 		<p>Use the form below to manage your tasks!</p>
 	</div>
-	<form id="entryForm">
-		<h2>Add new task</h2>
-		<label for="title">Task title:</label>
-		<input type="text" name="title" id="title" required tabindex="1">
-		<label for="description">Description:</label>
-		<input type="text" name="description" id="description" required tabindex="2">
-		<label for="dueDate">Due date:</label>
-		<input type="date" name="dueDate" id="dueDate" required tabindex="3">
-		<label for="priority">Priority:</label>
-		<select name="priority" id="priority">
-		</select>
-		<input type="submit" value="Add task">
-	</form>
+	<div id="sidebar">
+		<form id="entryForm">
+			<h2>Add new task</h2>
+			<label for="entryTitle">Task title:</label>
+			<input type="text" name="entryTitle" id="entryTitle" required tabindex="1">
+			<label for="description">Description:</label>
+			<input type="text" name="entryDescription" id="entryDescription" required tabindex="2">
+			<label for="entryDueDate">Due date:</label>
+			<input type="date" name="entryDueDate" id="entryDueDate" required tabindex="3">
+			<label for="entryPrioritySelect">Priority:</label>
+			<select name="entryPrioritySelect" id="entryPrioritySelect">
+			</select>
+			<input type="submit" value="Add task">
+		</form>
+		<hr>
+		<div id="projectMenu">
+			<h2>Projects</h2>
+		</div>
+	</div>
 	<ul id="taskList">
 		<li class="demo">
 			<span class="title">Title</span>
@@ -33,5 +39,20 @@
 			</div>
 		</li>
 	</ul>
+	<dialog id='taskEditDialog'>
+		<form id="editForm" method="dialog">
+			<input id="editIndex" type="hidden">
+			<label for="title">Task title:</label>
+			<input type="text" name="editTitle" id="editTitle" required tabindex="1">
+			<label for="description">Description:</label>
+			<input type="text" name="editDescription" id="editDescription" required tabindex="2">
+			<label for="dueDate">Due date:</label>
+			<input type="date" name="editDueDate" id="editDueDate" required tabindex="3">
+			<label for="editPriority">Priority:</label>
+			<select name="editPriority" id="editPrioritySelect">
+			</select>
+			<input type="submit" value="update task" required>
+		</form>
+	</dialog>
 </body>
 </html>

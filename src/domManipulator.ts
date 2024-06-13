@@ -46,6 +46,7 @@ export default class DomManipulator {
 	/**
 	 * Generate a DOM element for one task
 	 * @param task - The target task
+	 * @returns taskRoot - the HTML element representing the supplied task
 	 */
 	private static createTaskElement(task: Task): HTMLElement {
 		const taskRoot = document.createElement('li');

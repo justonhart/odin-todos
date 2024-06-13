@@ -25,7 +25,6 @@ body > *{
 form {
 	display: grid;
 	grid-template-columns: auto auto;
-	justify-items: left;
 	height: min-content;
 	gap: 0.5rem;
 	align-items: center;
@@ -81,6 +80,9 @@ form input[type="submit"]{
 
 .description{
 	font-style: italic;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .buttonPanel{

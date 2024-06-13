@@ -37,9 +37,8 @@ export default class DomManipulator {
 	 */
 	renderList(tasks: Task[]): void {
 		this.taskList.innerHTML = '';
-		tasks.forEach((task, index) => {
+		tasks.forEach((task) => {
 			const taskCard = DomManipulator.createTaskElement(task);
-			taskCard.dataset.index = index.toString();
 			this.taskList.appendChild(taskCard);
 		});
 	}
@@ -76,7 +75,6 @@ export default class DomManipulator {
 		editButton.textContent = '✏';
 		editButton.addEventListener('click', () => {
 			const eventDetail = {
-				index: taskRoot.dataset.index,
 				task: task
 			};
 			dispatchEvent(new CustomEvent('taskEdit', {detail: eventDetail}));
@@ -86,7 +84,7 @@ export default class DomManipulator {
 		const deleteButton = document.createElement('button');
 		deleteButton.textContent = '✖';
 		deleteButton.addEventListener('click', () => {
-			dispatchEvent(new CustomEvent('taskDelete', {detail: taskRoot.dataset.index}));
+			dispatchEvent(new CustomEvent('taskDelete', {detail: task.id}));
 		});
 		buttonPanel.appendChild(deleteButton);
 

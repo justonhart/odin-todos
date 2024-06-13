@@ -1,14 +1,14 @@
 import './style.css';
-import { Task } from './Task';
+import { Task, TaskList } from './Task';
 import DomManipulator from './domManipulator';
 
-const tasks: Task[] = [];
+const taskList = new TaskList();
 const EDIT_DIALOG = document.getElementById('taskEditDialog') as HTMLDialogElement;
 const EDIT_TITLE_FIELD = document.getElementById('editTitle') as HTMLInputElement;
 const EDIT_DESC_FIELD = document.getElementById('editDescription') as HTMLInputElement;
 const EDIT_DUE_DATE_FIELD = document.getElementById('editDueDate') as HTMLInputElement;
 const EDIT_PRIORITY_FIELD = document.getElementById('editPrioritySelect') as HTMLSelectElement;
-const EDIT_INDEX_FIELD = document.getElementById('editIndex') as HTMLInputElement;
+const EDIT_ID_FIELD = document.getElementById('editId') as HTMLInputElement;
 const ENTRY_TITLE_FIELD = document.getElementById('entryTitle') as HTMLInputElement;
 const ENTRY_DESC_FIELD = document.getElementById('entryDescription') as HTMLInputElement;
 const ENTRY_DUE_DATE_FIELD = document.getElementById('entryDueDate') as HTMLInputElement;
@@ -40,9 +40,8 @@ addEventListener('submit', event => {
 					Number.parseInt(ENTRY_PRIORITY_FIELD.value),
 					PROJECT_SELECT.value
 				);
-				console.log(new Date(ENTRY_DUE_DATE_FIELD.value));
-				tasks.push(newTask);
-				dm.renderList(tasks);
+				taskList.addTask(newTask);
+				dm.renderList(taskList.getTasks(PROJECT_SELECT.value));
 				ENTRY_TITLE_FIELD.focus();
 				ENTRY_TITLE_FIELD.select();
 			}
@@ -50,14 +49,14 @@ addEventListener('submit', event => {
 
 		//if the edit form was submitted, modify the task existing at the provided index
 		else if(event.target.id === 'editForm'){
-			tasks[Number.parseInt(EDIT_INDEX_FIELD.value)] = new Task(
-				EDIT_TITLE_FIELD.value,
-				EDIT_DESC_FIELD.value,
-				new Date(EDIT_DUE_DATE_FIELD.value),
-				Number.parseInt(EDIT_PRIORITY_FIELD.value),
-				''//EDIT AFTER ADDING PROJECT TO EDIT MODAL
-			);
-			dm.renderList(tasks);
+			let taskToEdit = taskList.getTask(Number.parseInt(EDIT_ID_FIELD.value));
+			taskToEdit.title = EDIT_TITLE_FIELD.value;
+			taskToEdit.description = EDIT_DESC_FIELD.value
+			taskToEdit.dueDate = new Date(EDIT_DUE_DATE_FIELD.value);
+			taskToEdit.priority = Number.parseInt(EDIT_PRIORITY_FIELD.value);
+
+			taskList.updateTask(Number.parseInt(EDIT_ID_FIELD.value), taskToEdit);
+			dm.renderList(taskList.getTasks(PROJECT_SELECT.value));
 			EDIT_DIALOG.close();
 		}
 
@@ -74,13 +73,13 @@ addEventListener('submit', event => {
 
 //when a taskDelete event is fired, remove the task at the defined index
 addEventListener('taskDelete', (event: CustomEvent) => {
-	tasks.splice(parseInt(event.detail), 1);
-	dm.renderList(tasks);
+	taskList.deleteTask(parseInt(event.detail));
+	dm.renderList(taskList.getTasks(PROJECT_SELECT.value));
 });
 
 //when a taskEdit event is fired, populate and show the taskEdit Dialog
 addEventListener('taskEdit', (event: CustomEvent) => {
-	EDIT_INDEX_FIELD.value = event.detail.index;
+	EDIT_ID_FIELD.value = event.detail.task.id;
 	EDIT_TITLE_FIELD.value = event.detail.task.title;
 	EDIT_DESC_FIELD.value = event.detail.task.description;
 	EDIT_DUE_DATE_FIELD.value = event.detail.task.dueDate.toISOString().substring(0,10);
@@ -88,7 +87,7 @@ addEventListener('taskEdit', (event: CustomEvent) => {
 	EDIT_DIALOG.showModal();
 });
 
+//upon changing projects, filter the displayed tasks to show only those matching the chosen project
 PROJECT_SELECT.onchange = () => {
-	 console.log(PROJECT_SELECT.value);
+	dm.renderList(taskList.getTasks(PROJECT_SELECT.value));
 };
-

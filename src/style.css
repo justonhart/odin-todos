@@ -48,7 +48,7 @@ form input[type="submit"]{
 	flex: 1;
 	margin: 0;
 	list-style-type: none;
-	background-color: #e6e6e6;
+	background-color: #dadada;
 	overflow: auto;
 	padding-right: 16px;
 	scrollbar-width: thin;
@@ -59,7 +59,7 @@ form input[type="submit"]{
 }
 
 
-#taskList li{
+li {
 	display: flex;
 	flex-direction: column;
 	background-color: white;
@@ -82,23 +82,21 @@ form input[type="submit"]{
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	height: 1rem;
 }
 
 .buttonPanel{
 	width: 100%;
+	margin-top: 8px;
 	text-align: right;
 }
 
 .buttonPanel button{
-	padding: 2px 8px;
+	padding: 2px 6px;
 }
 
 .buttonPanel button + button{
 	margin-left: 3px;
-}
-
-#taskList .read{
-	background-color:#e6ffe6;
 }
 
 dialog{
@@ -108,3 +106,21 @@ dialog{
 #projectMenu select{
 	width: 100%;
 }
+
+.high {
+	background-color: #ffff99;
+}
+
+.highest {
+	background-color: #ff9999;
+}
+
+.completed {
+	color: #808080;
+	background-color: #f4f4f4;
+}
+
+.completed .title {
+	text-decoration-line: line-through;
+}
+

@@ -3,6 +3,12 @@ import { Task, TaskList } from './Task';
 import DomManipulator from './domManipulator';
 
 const taskList = new TaskList();
+
+//load from localStorage if available
+if(localStorage.getItem('taskList')){
+	taskList.rebuildFromJson(localStorage.getItem('taskList'));
+}
+
 const EDIT_DIALOG = document.getElementById('taskEditDialog') as HTMLDialogElement;
 const EDIT_TITLE_FIELD = document.getElementById('editTitle') as HTMLInputElement;
 const EDIT_DESC_FIELD = document.getElementById('editDescription') as HTMLTextAreaElement;
@@ -19,8 +25,10 @@ const OPEN_ADD_PROJECT_BUTTON = document.getElementById('openAddProject') as HTM
 const ADD_PROJECT_NAME = document.getElementById('addProjectName') as HTMLInputElement;
 
 //create DomManipulator and run startup functions
-const dm = new DomManipulator();
+const dm = new DomManipulator(taskList);
 dm.buildPriorityOptions();
+dm.refreshProjectOptions();
+dm.renderList(taskList.getTasks(PROJECT_SELECT.value));
 
 OPEN_ADD_PROJECT_BUTTON.onclick = () => {ADD_PROJECT_DIALOG.showModal()};
 
@@ -41,6 +49,7 @@ addEventListener('submit', event => {
 					PROJECT_SELECT.value
 				);
 				taskList.addTask(newTask);
+				updateLocalStorage();
 				dm.renderList(taskList.getTasks(PROJECT_SELECT.value));
 				ENTRY_TITLE_FIELD.focus();
 				ENTRY_TITLE_FIELD.select();
@@ -56,16 +65,15 @@ addEventListener('submit', event => {
 			taskToEdit.priority = Number.parseInt(EDIT_PRIORITY_FIELD.value);
 
 			taskList.updateTask(Number.parseInt(EDIT_ID_FIELD.value), taskToEdit);
+			updateLocalStorage();
 			dm.renderList(taskList.getTasks(PROJECT_SELECT.value));
 			EDIT_DIALOG.close();
 		}
 
 		//if the add project form was submitted, add new value to project select
 		else if(event.target.id === 'addProjectForm'){
-			const newProjectOption = document.createElement('option');
-			newProjectOption.value = ADD_PROJECT_NAME.value;
-			newProjectOption.textContent = ADD_PROJECT_NAME.value;
-			PROJECT_SELECT.appendChild(newProjectOption);
+			dm.addProject(ADD_PROJECT_NAME.value);
+			dm.refreshProjectOptions();
 			ADD_PROJECT_DIALOG.close();
 		}
 	}
@@ -74,6 +82,7 @@ addEventListener('submit', event => {
 //when a taskDelete event is fired, remove the task at the defined index
 addEventListener('taskDelete', (event: CustomEvent) => {
 	taskList.deleteTask(parseInt(event.detail));
+	updateLocalStorage();
 	dm.renderList(taskList.getTasks(PROJECT_SELECT.value));
 });
 
@@ -86,8 +95,21 @@ addEventListener('taskEdit', (event: CustomEvent) => {
 	EDIT_PRIORITY_FIELD.value = event.detail.task.priority;
 	EDIT_DIALOG.showModal();
 });
+//
+//when a taskComplete event is fired, mark the target task as complete
+addEventListener('taskComplete', (event: CustomEvent) => {
+	taskList.completeTask(parseInt(event.detail));
+	updateLocalStorage();
+	dm.renderList(taskList.getTasks(PROJECT_SELECT.value));
+});
 
 //upon changing projects, filter the displayed tasks to show only those matching the chosen project
 PROJECT_SELECT.onchange = () => {
+	dm.setSelectedProject(PROJECT_SELECT.value);
 	dm.renderList(taskList.getTasks(PROJECT_SELECT.value));
 };
+
+function updateLocalStorage() {
+	localStorage.setItem('taskList', taskList.stringify());
+}
+

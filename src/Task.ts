@@ -8,12 +8,14 @@ export class Task{
 	public priority: Priority;
 	public project: string;
 	public id: number;
+	public completed: boolean;
 	constructor(title: string, desc: string, dueDate: Date, priority: Priority, project: string) {
 		this.title = title;
 		this.description = desc;
 		this.dueDate = dueDate;
 		this.priority = priority;
 		this.project = project;
+		this.completed = false;
 	}
 }
 
@@ -79,6 +81,14 @@ export class TaskList {
 	}
 
 	/**
+	 * Toggle the completion status of specified task
+	 * @param id - the id of the task to toggle
+	 */
+	public completeTask(id: number): void {
+		this.tasks.get(id).completed = !this.tasks.get(id).completed;
+	}
+
+	/**
 	 * Gets the next available id number for assignment
 	 * @returns nextId - the next available id number
 	 */
@@ -89,5 +99,36 @@ export class TaskList {
 			nextId += 1;
 		}
 		return nextId;
+	}
+
+	/**
+	 * Stringify the task list, used for storing in localStorage
+	 * @returns a list of tasks in JSON format
+	 */
+	public stringify(): string{
+		const arr = Array.from(this.tasks.values());
+		const jsonOut = JSON.stringify(arr);
+		return jsonOut;
+	}
+
+	/**
+	 * Rebuild the task list from strigified json
+	 * @param jsonString - the JSON representation of a task list
+	 */
+	public rebuildFromJson(jsonString: string): void {
+		const taskTokenArr: Task[] = JSON.parse(jsonString);
+		taskTokenArr.forEach((task: Task) => {
+			//since rebuilding dates from classes doesn't restore the type, we need to reassign the date as a Date
+			task.dueDate = new Date(task.dueDate);
+			this.updateTask(task.id, task);
+		});
+	}
+
+	/**
+	 * Returns a set of all project names extracted from existing tasks
+	 * @return each project name in a Set<string>
+	 */
+	public getAllProjectNames(): Set<string> {
+		return new Set<string>(Array.from(this.tasks.values()).map((task: Task) => task.project));
 	}
 }

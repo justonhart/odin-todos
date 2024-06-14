@@ -1,25 +1,28 @@
-html, body{
+html,
+body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
 }
 
-h1, h2, h3{
+h1,
+h2,
+h3 {
 	margin: 0;
 }
 
-body{
+body {
 	display: grid;
 	grid-template: min-content auto / max-content auto;
 }
 
-body > *{
-	padding:8px;
+body > * {
+	padding: 8px;
 }
 
-#header{
+#header {
 	grid-column: 1 / -1;
-	border-bottom:1px solid black;
+	border-bottom: 1px solid black;
 }
 
 form {
@@ -30,20 +33,20 @@ form {
 	align-items: center;
 }
 
-form h2{
+form h2 {
 	grid-column: 1 / -1;
 }
 
-form input{
+form input {
 	height: min-content;
 }
 
-form input[type="submit"]{
+form input[type="submit"] {
 	grid-column: 2;
 	justify-self: end;
 }
 
-#taskList{
+#taskList {
 	border-left: 1px solid black;
 	flex: 1;
 	margin: 0;
@@ -58,7 +61,6 @@ form input[type="submit"]{
 	gap: 1rem;
 }
 
-
 li {
 	display: flex;
 	flex-direction: column;
@@ -69,15 +71,15 @@ li {
 	height: min-content;
 }
 
-.demo{
+.demo {
 	color: gray;
 }
 
-.title{
+.title {
 	font-weight: bold;
 }
 
-.description{
+.description {
 	font-style: italic;
 	white-space: nowrap;
 	overflow: hidden;
@@ -85,25 +87,25 @@ li {
 	height: 1rem;
 }
 
-.buttonPanel{
+.buttonPanel {
 	width: 100%;
 	margin-top: 8px;
 	text-align: right;
 }
 
-.buttonPanel button{
+.buttonPanel button {
 	padding: 2px 6px;
 }
 
-.buttonPanel button + button{
+.buttonPanel button + button {
 	margin-left: 3px;
 }
 
-dialog{
+dialog {
 	padding: revert;
 }
 
-#projectMenu select{
+#projectMenu select {
 	width: 100%;
 }
 
@@ -123,4 +125,3 @@ dialog{
 .completed .title {
 	text-decoration-line: line-through;
 }
-

@@ -1,7 +1,7 @@
 /**
  * Represents a task
  */
-export class Task{
+export class Task {
 	public title: string;
 	public description: string;
 	public dueDate: Date;
@@ -9,7 +9,13 @@ export class Task{
 	public project: string;
 	public id: number;
 	public completed: boolean;
-	constructor(title: string, desc: string, dueDate: Date, priority: Priority, project: string) {
+	constructor(
+		title: string,
+		desc: string,
+		dueDate: Date,
+		priority: Priority,
+		project: string,
+	) {
 		this.title = title;
 		this.description = desc;
 		this.dueDate = dueDate;
@@ -19,10 +25,10 @@ export class Task{
 	}
 }
 
-export enum Priority{
+export enum Priority {
 	Normal = 1,
 	High,
-	Highest
+	Highest,
 }
 
 /**
@@ -31,7 +37,7 @@ export enum Priority{
 export class TaskList {
 	private tasks: Map<number, Task>;
 
-	constructor () {
+	constructor() {
 		this.tasks = new Map<number, Task>();
 	}
 
@@ -49,17 +55,19 @@ export class TaskList {
 	 * @param project - the project whose tasks we want to retrieve
 	 * @returns a Task array containing only the tasks with the specified project
 	 */
-	public getTasks(project: string): Task[]{
-		return Array.from(this.tasks.values()).filter((task: Task) => task.project === project);
+	public getTasks(project: string): Task[] {
+		return Array.from(this.tasks.values()).filter(
+			(task: Task) => task.project === project,
+		);
 	}
 
 	/**
 	 * Add a new task to the TaskList. Id is automatically determined by the TaskList, and any provided id will be discarded.
 	 * @param task - the task to add to the TaskList
 	 */
-	public addTask(task: Task): void{
-		let nextId = this.getNextId();
-		task.id = nextId; 
+	public addTask(task: Task): void {
+		const nextId = this.getNextId();
+		task.id = nextId;
 		this.tasks.set(nextId, task);
 	}
 
@@ -76,7 +84,7 @@ export class TaskList {
 	 * Deletes a task from the TaskList, freeing up the id to be used again
 	 * @param id - the id number of the task to delete
 	 */
-	public deleteTask(id: number): void{
+	public deleteTask(id: number): void {
 		this.tasks.delete(id);
 	}
 
@@ -92,10 +100,10 @@ export class TaskList {
 	 * Gets the next available id number for assignment
 	 * @returns nextId - the next available id number
 	 */
-	private getNextId(): number{
+	private getNextId(): number {
 		let nextId = 1;
 		const currentKeys = Array.from(this.tasks.keys());
-		while(currentKeys.includes(nextId)){
+		while (currentKeys.includes(nextId)) {
 			nextId += 1;
 		}
 		return nextId;
@@ -105,7 +113,7 @@ export class TaskList {
 	 * Stringify the task list, used for storing in localStorage
 	 * @returns a list of tasks in JSON format
 	 */
-	public stringify(): string{
+	public stringify(): string {
 		const arr = Array.from(this.tasks.values());
 		const jsonOut = JSON.stringify(arr);
 		return jsonOut;
@@ -129,6 +137,8 @@ export class TaskList {
 	 * @return each project name in a Set<string>
 	 */
 	public getAllProjectNames(): Set<string> {
-		return new Set<string>(Array.from(this.tasks.values()).map((task: Task) => task.project));
+		return new Set<string>(
+			Array.from(this.tasks.values()).map((task: Task) => task.project),
+		);
 	}
 }

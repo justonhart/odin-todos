@@ -1,60 +1,89 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Odin Todos!</title>
-</head>
-<body>
-	<div id="header">
-		<h1>Odin Todos</h1>
-		<p>Use the form below to manage your tasks!</p>
-	</div>
-	<div id="sidebar">
-		<form id="entryForm">
-			<h2>Add new task</h2>
-			<label for="entryTitle">Task title:</label>
-			<input type="text" name="entryTitle" id="entryTitle" required tabindex="1">
-			<label for="description">Description:</label>
-			<textarea name="entryDescription" id="entryDescription" tabindex="2"></textarea>
-			<label for="entryDueDate">Due date:</label>
-			<input type="date" name="entryDueDate" id="entryDueDate" required tabindex="3">
-			<label for="entryPrioritySelect">Priority:</label>
-			<select name="entryPrioritySelect" id="entryPrioritySelect">
-			</select>
-			<input type="submit" value="Add task">
-		</form>
-		<hr>
-		<div id="projectMenu">
-			<h2>Projects</h2>
-			<select id="projectSelect" name="projectSelect" size=10>
-				<option value="Default" selected>Default</option>
-			</select>
-			<button id="openAddProject">Add new project</button>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Odin Todos!</title>
+	</head>
+	<body>
+		<div id="header">
+			<h1>Odin Todos</h1>
+			<p>Use the form below to manage your tasks!</p>
 		</div>
-	</div>
-	<ul id="taskList">
-	</ul>
-	<dialog id='taskEditDialog'>
-		<form id="editForm" method="dialog">
-			<input id="editId" type="hidden">
-			<label for="title">Task title:</label>
-			<input type="text" name="editTitle" id="editTitle" required tabindex="1">
-			<label for="description">Description:</label>
-			<textarea name="editDescription" id="editDescription" tabindex="2"></textarea>
-			<label for="dueDate">Due date:</label>
-			<input type="date" name="editDueDate" id="editDueDate" required tabindex="3">
-			<label for="editPriority">Priority:</label>
-			<select name="editPriority" id="editPrioritySelect">
-			</select>
-			<input type="submit" value="Update task">
-		</form>
-	</dialog>
-	<dialog id="addProjectDialog">
-		<form id="addProjectForm" method="dialog">
-			<label for="addProjectName">New project name:</label>
-			<input type="text" name="addProjectName" id="addProjectName">
-			<input type="submit" value="Create project">
-		</form>
-	</dialog>
-</body>
+		<div id="sidebar">
+			<form id="entryForm">
+				<h2>Add new task</h2>
+				<label for="entryTitle">Task title:</label>
+				<input
+					type="text"
+					name="entryTitle"
+					id="entryTitle"
+					required
+					tabindex="1"
+				/>
+				<label for="description">Description:</label>
+				<textarea
+					name="entryDescription"
+					id="entryDescription"
+					tabindex="2"
+				></textarea>
+				<label for="entryDueDate">Due date:</label>
+				<input
+					type="date"
+					name="entryDueDate"
+					id="entryDueDate"
+					required
+					tabindex="3"
+				/>
+				<label for="entryPrioritySelect">Priority:</label>
+				<select name="entryPrioritySelect" id="entryPrioritySelect"></select>
+				<input type="submit" value="Add task" />
+			</form>
+			<hr />
+			<div id="projectMenu">
+				<h2>Projects</h2>
+				<select id="projectSelect" name="projectSelect" size="10">
+					<option value="Default" selected>Default</option>
+				</select>
+				<button id="openAddProject">Add new project</button>
+			</div>
+		</div>
+		<ul id="taskList"></ul>
+		<dialog id="taskEditDialog">
+			<form id="editForm" method="dialog">
+				<input id="editId" type="hidden" />
+				<label for="title">Task title:</label>
+				<input
+					type="text"
+					name="editTitle"
+					id="editTitle"
+					required
+					tabindex="1"
+				/>
+				<label for="description">Description:</label>
+				<textarea
+					name="editDescription"
+					id="editDescription"
+					tabindex="2"
+				></textarea>
+				<label for="dueDate">Due date:</label>
+				<input
+					type="date"
+					name="editDueDate"
+					id="editDueDate"
+					required
+					tabindex="3"
+				/>
+				<label for="editPriority">Priority:</label>
+				<select name="editPriority" id="editPrioritySelect"></select>
+				<input type="submit" value="Update task" />
+			</form>
+		</dialog>
+		<dialog id="addProjectDialog">
+			<form id="addProjectForm" method="dialog">
+				<label for="addProjectName">New project name:</label>
+				<input type="text" name="addProjectName" id="addProjectName" />
+				<input type="submit" value="Create project" />
+			</form>
+		</dialog>
+	</body>
 </html>

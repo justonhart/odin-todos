@@ -1,4 +1,4 @@
-import {Task, TaskList, Priority} from "./Task";
+import { Task, TaskList, Priority } from "./Task";
 
 /**
  * Module for handling all of the DOM manipulation required by the page
@@ -10,37 +10,43 @@ export default class DomManipulator {
 	private projectNames: Set<string>;
 	private selectedProject: string;
 	constructor(taskList: TaskList) {
-		let foundList = document.getElementById('taskList');
-		if(foundList != null){
+		const foundList = document.getElementById("taskList");
+		if (foundList != null) {
 			this.taskList = foundList;
 		}
 
-		let foundPrioritySelects = document.querySelectorAll('select[id$="PrioritySelect"');
+		const foundPrioritySelects = document.querySelectorAll(
+			'select[id$="PrioritySelect"',
+		);
 		this.prioritySelects = foundPrioritySelects;
-		
-		let foundProjectSelect = document.getElementById('projectSelect');
-		if(foundProjectSelect != null) {
+
+		const foundProjectSelect = document.getElementById("projectSelect");
+		if (foundProjectSelect != null) {
 			this.projectSelect = foundProjectSelect;
 		}
 
 		this.projectNames = new Set<string>();
-		this.projectNames.add('Default');
-		this.selectedProject = 'Default';
-		taskList.getAllProjectNames().forEach((name: string) => this.projectNames.add(name));
+		this.projectNames.add("Default");
+		this.selectedProject = "Default";
+		taskList
+			.getAllProjectNames()
+			.forEach((name: string) => this.projectNames.add(name));
 	}
 
 	/**
 	 * Populates the "Priority" select list with each value defined in the Priority Enum
 	 */
-	buildPriorityOptions():void {
-		this.prioritySelects.forEach(node => {
-			Object.values(Priority).filter(key => typeof key === 'number').forEach((value: number) => {
-				//create option element
-				const option = document.createElement('option') as HTMLOptionElement;
-				option.text = Priority[value];
-				option.value = value.toString();
-				node.appendChild(option);
-			});
+	buildPriorityOptions(): void {
+		this.prioritySelects.forEach((node) => {
+			Object.values(Priority)
+				.filter((key) => typeof key === "number")
+				.forEach((value: number) => {
+					//create option element
+					const option = document.createElement("option") as HTMLOptionElement;
+					option.text = Priority[value];
+					option.value = value.toString();
+					node.appendChild(option);
+				});
 		});
 	}
 
@@ -49,7 +55,7 @@ export default class DomManipulator {
 	 * @param tasks - List of tasks to be rendered in the DOM
 	 */
 	renderList(tasks: Task[]): void {
-		this.taskList.innerHTML = '';
+		this.taskList.innerHTML = "";
 
 		// task order (in order of importance):
 		// (1) completed tasks follow uncompleted tasks
@@ -61,20 +67,27 @@ export default class DomManipulator {
 		};
 
 		const sortByDate = (a: Task, b: Task): 1 | 0 | -1 => {
-			return a.dueDate.getTime() === b.dueDate.getTime() ? 0 : a.dueDate > b.dueDate ? 1 : -1;
+			return a.dueDate.getTime() === b.dueDate.getTime()
+				? 0
+				: a.dueDate > b.dueDate
+					? 1
+					: -1;
 		};
 
 		const sortByPriority = (a: Task, b: Task): 1 | 0 | -1 => {
 			return a.priority === b.priority ? 0 : a.priority > b.priority ? -1 : 1;
-		}
+		};
 
-		tasks.sort((a: Task, b: Task) => {
-				return sortByCompletion(a,b) || sortByDate(a,b) || sortByPriority(a,b);
+		tasks
+			.sort((a: Task, b: Task) => {
+				return (
+					sortByCompletion(a, b) || sortByDate(a, b) || sortByPriority(a, b)
+				);
 			})
 			.forEach((task) => {
-			const taskCard = DomManipulator.createTaskElement(task);
-			this.taskList.appendChild(taskCard);
-		});
+				const taskCard = DomManipulator.createTaskElement(task);
+				this.taskList.appendChild(taskCard);
+			});
 	}
 
 	/**
@@ -83,70 +96,69 @@ export default class DomManipulator {
 	 * @returns taskRoot - the HTML element representing the supplied task
 	 */
 	private static createTaskElement(task: Task): HTMLElement {
-		const taskRoot = document.createElement('li');
+		const taskRoot = document.createElement("li");
 
-		const title = document.createElement('span');
+		const title = document.createElement("span");
 		title.textContent = task.title;
-		title.classList.add('title');
+		title.classList.add("title");
 		taskRoot.appendChild(title);
 
-		const description = document.createElement('span');
+		const description = document.createElement("span");
 		description.textContent = task.description;
-		description.classList.add('description');
+		description.classList.add("description");
 		taskRoot.appendChild(description);
 
-		const dueDate = document.createElement('span');
-		dueDate.textContent = `Due date: ${task.dueDate.getUTCMonth()+1}/${task.dueDate.getUTCDate()}/${task.dueDate.getUTCFullYear()}`;
+		const dueDate = document.createElement("span");
+		dueDate.textContent = `Due date: ${task.dueDate.getUTCMonth() + 1}/${task.dueDate.getUTCDate()}/${task.dueDate.getUTCFullYear()}`;
 		taskRoot.appendChild(dueDate);
 
-		const priority = document.createElement('span');
-		priority.textContent = 'Priority: ' + Priority[task.priority]; 
+		const priority = document.createElement("span");
+		priority.textContent = "Priority: " + Priority[task.priority];
 		taskRoot.appendChild(priority);
 
-		const buttonPanel = document.createElement('div');
-		buttonPanel.classList.add('buttonPanel');
+		const buttonPanel = document.createElement("div");
+		buttonPanel.classList.add("buttonPanel");
 
-		const completeButton = document.createElement('button');
-		completeButton.textContent = '✔';
-		completeButton.addEventListener('click', () => {
-			dispatchEvent(new CustomEvent('taskComplete', {detail: task.id}));
+		const completeButton = document.createElement("button");
+		completeButton.textContent = "✔";
+		completeButton.addEventListener("click", () => {
+			dispatchEvent(new CustomEvent("taskComplete", { detail: task.id }));
 		});
 		buttonPanel.appendChild(completeButton);
 
-		const editButton = document.createElement('button');
-		editButton.textContent = '✏';
+		const editButton = document.createElement("button");
+		editButton.textContent = "✏";
 
 		const fireEditEvent = () => {
 			const eventDetail = {
-				task: task
+				task: task,
 			};
-			dispatchEvent(new CustomEvent('taskEdit', {detail: eventDetail}));
+			dispatchEvent(new CustomEvent("taskEdit", { detail: eventDetail }));
 		};
 
-		editButton.addEventListener('click', fireEditEvent);
+		editButton.addEventListener("click", fireEditEvent);
 
 		buttonPanel.appendChild(editButton);
 
-		const deleteButton = document.createElement('button');
-		deleteButton.textContent = '✖';
-		deleteButton.addEventListener('click', () => {
-			dispatchEvent(new CustomEvent('taskDelete', {detail: task.id}));
+		const deleteButton = document.createElement("button");
+		deleteButton.textContent = "✖";
+		deleteButton.addEventListener("click", () => {
+			dispatchEvent(new CustomEvent("taskDelete", { detail: task.id }));
 		});
 		buttonPanel.appendChild(deleteButton);
 
 		taskRoot.appendChild(buttonPanel);
 
-		if(task.completed){
-			taskRoot.classList.add('completed');
+		if (task.completed) {
+			taskRoot.classList.add("completed");
 		}
 
-		taskRoot.addEventListener('dblclick', fireEditEvent);
+		taskRoot.addEventListener("dblclick", fireEditEvent);
 
-		if(task.priority === Priority.High){
-			taskRoot.classList.add('high');
-		}
-		else if(task.priority === Priority.Highest){
-			taskRoot.classList.add('highest');
+		if (task.priority === Priority.High) {
+			taskRoot.classList.add("high");
+		} else if (task.priority === Priority.Highest) {
+			taskRoot.classList.add("highest");
 		}
 
 		return taskRoot;
@@ -155,13 +167,13 @@ export default class DomManipulator {
 	/**
 	 * Refreshes the project list element using existing project names
 	 */
-	public refreshProjectOptions(): void{
-		this.projectSelect.innerHTML = '';
+	public refreshProjectOptions(): void {
+		this.projectSelect.innerHTML = "";
 		this.projectNames.forEach((name: string) => {
-			const option = document.createElement('option');
+			const option = document.createElement("option");
 			option.value = name;
 			option.textContent = name;
-			if(name === this.selectedProject){
+			if (name === this.selectedProject) {
 				option.selected = true;
 			}
 			this.projectSelect.appendChild(option);
@@ -181,7 +193,7 @@ export default class DomManipulator {
 	 * Updates the internal selectedTask value
 	 * @param name - the name of the selected project
 	 */
-	public setSelectedProject(name: string): void{
+	public setSelectedProject(name: string): void {
 		this.selectedProject = name;
 	}
 }

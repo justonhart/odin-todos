@@ -1,43 +1,39 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
 	entry: {
-		index: './src/script.ts',
+		index: "./src/script.ts",
 	},
 	output: {
-		filename: 'bundle.js',
-		path: path.resolve(__dirname, 'dist'),
-		clean: true
+		filename: "bundle.js",
+		path: path.resolve(__dirname, "dist"),
+		clean: true,
 	},
 	module: {
 		rules: [
 			{
 				test: /\.css$/i,
-				use: ['style-loader', 'css-loader']
+				use: ["style-loader", "css-loader"],
 			},
 			{
 				test: /\.(png|jpg|svg)$/i,
-				type: 'asset/resource'
+				type: "asset/resource",
 			},
 			{
 				test: /\.ts?$/,
-				use: 'ts-loader',
+				use: "ts-loader",
 				exclude: /node_modules/,
 			},
-		]
+		],
 	},
 	resolve: {
-		extensions: [
-			'.tsx',
-			'.ts',
-			'.js'
-		]
+		extensions: [".tsx", ".ts", ".js"],
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			title: 'Output Management',
-			template: './src/index.html'
-		})
-	]
+			title: "Output Management",
+			template: "./src/index.html",
+		}),
+	],
 };

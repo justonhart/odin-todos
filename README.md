@@ -1,6 +1,8 @@
 # Odin To-dos
 This project is part of the Odin Project, a self-driven web development training program. Learn more at [the Odin Project](https://theodinproject.com).
 
+You can view this project [here](https://github.justonh.art/odin-todos).
+
 ## Project summary
 The assignment for this project was to create a to-do list management tool using HTML, CSS, and JavaScript. There should be a focus on separation of concerns; i.e., don't include dom manipulation logic in data models, etc. 
 
